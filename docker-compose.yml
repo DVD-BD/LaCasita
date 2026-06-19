@@ -1,0 +1,57 @@
+services:
+  app:
+    build: .
+    container_name: lacasita_app
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+    environment:
+      APP_NAME: "La Casita"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: lacasita_laravel
+      DB_USERNAME: lacasita_user
+      DB_PASSWORD: lacasita_pass
+
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+
+      WAIT_FOR_DB: "true"
+      RUN_MIGRATIONS: "true"
+      RUN_SEEDERS: "true"
+
+  mysql:
+    image: mysql:8.0
+    container_name: lacasita_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: lacasita_laravel
+      MYSQL_USER: lacasita_user
+      MYSQL_PASSWORD: lacasita_pass
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - lacasita_mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lacasita_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+
+volumes:
+  lacasita_mysql_data:

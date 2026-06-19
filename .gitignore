@@ -1,0 +1,15 @@
+/vendor
+/node_modules
+/public/build
+/public/hot
+/storage/*.key
+/storage/logs/*.log
+/bootstrap/cache/*.php
+/.env
+/.env.*
+!/.env.example
+!/.env.docker.example
+/.phpunit.cache
+/.idea
+.vscode
+.DS_Store

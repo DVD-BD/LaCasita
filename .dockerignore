@@ -1,0 +1,15 @@
+.git
+.github
+vendor
+node_modules
+.env
+.env.*
+!.env.example
+!.env.docker.example
+public/build
+public/hot
+storage/logs/*
+bootstrap/cache/*.php
+.DS_Store
+.idea
+.vscode

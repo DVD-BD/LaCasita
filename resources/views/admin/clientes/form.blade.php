@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title','Formulario | La Casita')
+@section('eyebrow','Administración')
+@section('heading', $cliente->exists ? 'Editar registro' : 'Agregar registro')
+@section('content')
+<section class="panel-card"><form class="form-grid" method="POST" action="{{ $cliente->exists ? route('clientes.update',$cliente) : route('clientes.store') }}">@csrf @if($cliente->exists) @method('PUT') @endif <label>Nombre<input class="input" type="text" name="nombre" value="{{ old('nombre',$cliente->nombre) }}"></label><label>Teléfono<input class="input" type="text" name="telefono" value="{{ old('telefono',$cliente->telefono) }}"></label><label>Correo<input class="input" type="email" name="correo" value="{{ old('correo',$cliente->correo) }}"></label><label>Ciudad<input class="input" type="text" name="ciudad" value="{{ old('ciudad',$cliente->ciudad) }}"></label><label>CP<input class="input" type="text" name="codigo_postal" value="{{ old('codigo_postal',$cliente->codigo_postal) }}"></label><label class="span-2">Dirección<textarea class="input" name="direccion">{{ old('direccion',$cliente->direccion) }}</textarea></label><label>Estado<select class="input" name="estado"><option value="Activo" @selected(old('estado',$cliente->estado)=='Activo')>Activo</option><option value="Inactivo" @selected(old('estado',$cliente->estado)=='Inactivo')>Inactivo</option></select></label><button class="primary-button span-2">Guardar</button></form></section>
+@endsection
