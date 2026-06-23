@@ -36,22 +36,41 @@ class ClientePanelController extends Controller
         ]);
     }
 
-    public function comprar($producto)
-    {
-        DB::transaction(function () use ($producto) {
-            $producto = Producto::whereKey($producto)
-                ->lockForUpdate()
-                ->firstOrFail();
+   public function comprar($producto)
+{
+    $usuario = Auth::user();
 
-            if ($producto->stock <= 0) {
-                abort(409, 'El producto seleccionado no tiene stock disponible.');
-            }
+    DB::transaction(function () use ($producto, $usuario) {
+        $producto = Producto::whereKey($producto)
+            ->lockForUpdate()
+            ->firstOrFail();
 
-            $producto->decrement('stock');
-        });
+        if ($producto->stock <= 0) {
+            abort(409, 'El producto seleccionado no tiene stock disponible.');
+        }
 
-        return redirect()
-            ->route('cliente.catalogo')
-            ->with('success', 'Compra realizada correctamente.');
-    }
+        $producto->decrement('stock');
+
+        $venta = Venta::create([
+            'id_cliente' => $usuario->id_cliente,
+            'id_empleado' => null,
+            'id_sucursal' => 1,
+            'id_metodo' => 1,
+            'fecha' => now()->toDateString(),
+            'hora' => now()->format('H:i:s'),
+            'estado' => 'Pagada',
+            'total' => $producto->precio,
+        ]);
+
+        $venta->detalles()->create([
+            'id_producto' => $producto->id_producto,
+            'cantidad' => 1,
+            'precio_unitario' => $producto->precio,
+        ]);
+    });
+
+    return redirect()
+        ->route('cliente.compras')
+        ->with('success', 'Compra realizada correctamente.');
+}
 }
