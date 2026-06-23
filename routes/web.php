@@ -56,13 +56,17 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::middleware('role:administrador,empleado')->group(function () {
-        Route::resource('productos', ProductoController::class)->except(['show']);
+Route::middleware('role:administrador,empleado')->group(function () {
+    Route::resource('productos', ProductoController::class)->except(['show']);
 
-        Route::get('ventas', [VentaController::class, 'index'])->name('ventas.index');
+    Route::get('ventas', [VentaController::class, 'index'])->name('ventas.index');
 
-        Route::get('inventario', [InventarioController::class, 'index'])->name('inventario.index');
-    });
+    Route::get('inventario', [InventarioController::class, 'index'])->name('inventario.index');
+
+    Route::resource('clientes', ClienteController::class)
+        ->parameters(['clientes' => 'cliente'])
+        ->except(['show']);
+});
 
     /*
     |--------------------------------------------------------------------------
@@ -73,10 +77,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:administrador')->group(function () {
         Route::resource('categorias', CategoriaController::class)
             ->parameters(['categorias' => 'categoria'])
-            ->except(['show']);
-
-        Route::resource('clientes', ClienteController::class)
-            ->parameters(['clientes' => 'cliente'])
             ->except(['show']);
 
         Route::resource('empleados', EmpleadoController::class)
