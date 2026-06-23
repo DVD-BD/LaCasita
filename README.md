@@ -708,3 +708,8 @@ También se agregó Docker para facilitar la ejecución del proyecto sin depende
 El proyecto **La Casita** integra el proceso completo de análisis, diseño e implementación de una base de datos relacional dentro de una aplicación web funcional.
 
 A lo largo de las prácticas se trabajó desde la identificación de entidades y relaciones hasta la implementación de la base de datos y su conexión con Laravel. La dockerización permite ejecutar el sistema de forma más sencilla y uniforme, manteniendo juntos los servicios necesarios para el funcionamiento del proyecto.
+
+
+## Enlace del proyecto desplegado
+
+La aplicación se encuentra disponible en: [https://lacasita-production-560a.up.railway.app](https://lacasita-production-560a.up.railway.app)
