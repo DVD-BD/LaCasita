@@ -33,10 +33,9 @@ RUN chmod +x docker/entrypoint.sh \
     && if [ ! -f .env ]; then cp .env.docker.example .env; fi \
     && php artisan package:discover --ansi \
     && rm -f .env \
-    && rm -f /etc/apache2/mods-enabled/mpm_event.load \
-          /etc/apache2/mods-enabled/mpm_event.conf \
-          /etc/apache2/mods-enabled/mpm_worker.load \
-          /etc/apache2/mods-enabled/mpm_worker.conf \
+    && rm -f /etc/apache2/mods-enabled/mpm_event.* \
+          /etc/apache2/mods-enabled/mpm_worker.* \
+    && (a2dismod mpm_event mpm_worker || true) \
     && a2enmod mpm_prefork rewrite \
     && sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
     && sed -i 's|<Directory /var/www/>|<Directory /var/www/html/public/>|g' /etc/apache2/apache2.conf \
@@ -48,4 +47,4 @@ EXPOSE 80
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 
-CMD ["apache2-foreground"]
+CMD ["bash", "-lc", "rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* && apache2-foreground"]
