@@ -14,6 +14,7 @@
     <a class="info-card" data-icon="🛒" href="{{ route('productos.index') }}">Productos</a>
     <a class="info-card" data-icon="📦" href="{{ route('inventario.index') }}">Inventario</a>
     <a class="info-card" data-icon="💳" href="{{ route('ventas.index') }}">Ventas</a>
+    <a class="info-card" data-icon="👥" href="{{ route('clientes.index') }}">Clientes</a>
   </div>
 </section>
 @endsection
