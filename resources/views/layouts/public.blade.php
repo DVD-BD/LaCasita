@@ -14,8 +14,8 @@
 
   <link rel="icon" type="image/jpeg" href="{{ asset('assets/img/logo-lacasita.jpeg') }}">
 
-<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=railway-final-1">
-<link rel="stylesheet" href="{{ asset('assets/css/laravel-pro.css') }}?v=railway-final-1">
+<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=railway-final-3">
+<link rel="stylesheet" href="{{ asset('assets/css/laravel-pro.css') }}?v=railway-final-3">
 </head>
 
 <body class="public-page">
