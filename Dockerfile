@@ -33,12 +33,19 @@ RUN chmod +x docker/entrypoint.sh \
     && if [ ! -f .env ]; then cp .env.docker.example .env; fi \
     && php artisan package:discover --ansi \
     && rm -f .env \
-    && a2enmod rewrite \
+    && rm -f /etc/apache2/mods-enabled/mpm_event.load \
+          /etc/apache2/mods-enabled/mpm_event.conf \
+          /etc/apache2/mods-enabled/mpm_worker.load \
+          /etc/apache2/mods-enabled/mpm_worker.conf \
+    && a2enmod mpm_prefork rewrite \
     && sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
     && sed -i 's|<Directory /var/www/>|<Directory /var/www/html/public/>|g' /etc/apache2/apache2.conf \
+    && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 80
 
 ENTRYPOINT ["docker/entrypoint.sh"]
+
 CMD ["apache2-foreground"]
