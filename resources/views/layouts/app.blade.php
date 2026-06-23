@@ -61,14 +61,15 @@
         <a href="{{ route('ventas.index') }}" class="{{ request()->routeIs('ventas.*') ? 'active' : '' }}">
           <span>💳</span> Ventas
         </a>
+      
+        <a href="{{ route('clientes.index') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">
+        <span>👥</span> Clientes
+        </a>
       @endif
 
       @if(auth()->user()->rol === 'administrador')
         <span class="nav-section-label">Administración</span>
 
-        <a href="{{ route('clientes.index') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">
-          <span>👥</span> Clientes
-        </a>
 
         <a href="{{ route('empleados.index') }}" class="{{ request()->routeIs('empleados.*') ? 'active' : '' }}">
           <span>🧑‍💼</span> Empleados
