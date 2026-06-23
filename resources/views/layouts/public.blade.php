@@ -16,6 +16,43 @@
 
 <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=railway-final-3">
 <link rel="stylesheet" href="{{ asset('assets/css/laravel-pro.css') }}?v=railway-final-3">
+
+<style>
+  .brand-logo {
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+    border-radius: 14px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .product-image {
+    height: 178px !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .dashboard-shell {
+    display: grid !important;
+    grid-template-columns: 310px minmax(0, 1fr) !important;
+  }
+
+  .sidebar-app {
+    height: 100vh !important;
+    position: sticky !important;
+    top: 0 !important;
+  }
+</style>
+  
 </head>
 
 <body class="public-page">
