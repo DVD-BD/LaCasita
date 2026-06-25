@@ -4,16 +4,16 @@ const SESSION_KEY = 'lacasita_static_session_v1';
 const initialDB = {
   users: [
     { id: 1, name: 'Administrador', email: 'admin@lacasita.com', password: '123456', role: 'administrador' },
-    { id: 2, name: 'Empleado Demo', email: 'empleado@lacasita.com', password: '123456', role: 'empleado', employeeId: 1 },
-    { id: 3, name: 'Cliente Demo', email: 'cliente@lacasita.com', password: '123456', role: 'cliente', clientId: 1 }
+    { id: 2, name: 'Empleado General', email: 'empleado@lacasita.com', password: '123456', role: 'empleado', employeeId: 1 },
+    { id: 3, name: 'Cliente General', email: 'cliente@lacasita.com', password: '123456', role: 'cliente', clientId: 1 }
   ],
   clients: [
-    { id: 1, name: 'Cliente Demo', email: 'cliente@lacasita.com', phone: '5512345678' },
+    { id: 1, name: 'Cliente General', email: 'cliente@lacasita.com', phone: '5512345678' },
     { id: 2, name: 'María López', email: 'maria@email.com', phone: '5587654321' },
     { id: 3, name: 'Carlos Pérez', email: 'carlos@email.com', phone: '5555443322' }
   ],
   employees: [
-    { id: 1, name: 'Empleado Demo', email: 'empleado@lacasita.com', position: 'Cajero', branch: 'Sucursal Centro' },
+    { id: 1, name: 'Empleado General', email: 'empleado@lacasita.com', position: 'Cajero', branch: 'Sucursal Centro' },
     { id: 2, name: 'Ana Martínez', email: 'ana@lacasita.com', position: 'Inventario', branch: 'Sucursal Norte' }
   ],
   products: [
@@ -204,7 +204,7 @@ function addClient(event) {
     clientId
   });
   saveDB();
-  state.message = 'Cliente agregado correctamente. Contraseña demo: 123456.';
+  state.message = 'Cliente agregado correctamente. Contraseña inicial: 123456.';
   render();
 }
 
@@ -229,7 +229,7 @@ function addEmployee(event) {
     employeeId
   });
   saveDB();
-  state.message = 'Empleado agregado correctamente. Contraseña demo: 123456.';
+  state.message = 'Empleado agregado correctamente. Contraseña inicial: 123456.';
   render();
 }
 
@@ -262,11 +262,10 @@ function topbar(isLogged = false) {
         <div class="logo">🏪</div>
         <div>
           <strong>La Casita</strong>
-          <small>${isLogged ? 'Versión estática con localStorage' : 'Mini súper demo'}</small>
+          <small>${isLogged ? 'Sistema web' : 'Mini súper y abarrotes'}</small>
         </div>
       </div>
       <div class="nav-actions">
-        <a class="btn ghost" href="https://lacasita-production-560a.up.railway.app" target="_blank">Versión Railway</a>
         ${isLogged ? `<button class="btn ghost" onclick="resetDB()">Reiniciar datos</button><button class="btn danger" onclick="logout()">Cerrar sesión</button>` : ''}
       </div>
     </header>
@@ -281,12 +280,12 @@ function renderPublic(keepMessage = false) {
       <div class="hero-card">
         <p class="eyebrow">Sistema web para mini súper</p>
         <h1>La Casita</h1>
-        <p>Versión estática de respaldo para demostrar el flujo del sistema sin conexión a una base de datos real. Los datos se guardan en el navegador mediante localStorage.</p>
+        <p>Sistema para administrar productos, clientes, empleados, ventas e inventario de un mini súper de manera sencilla y organizada.</p>
         <div class="badges">
-          <span class="badge">Laravel original</span>
-          <span class="badge">Demo estática</span>
-          <span class="badge">Roles</span>
-          <span class="badge">Ventas simuladas</span>
+          <span class="badge">Administración</span>
+          <span class="badge">Productos</span>
+          <span class="badge">Ventas</span>
+          <span class="badge">Inventario</span>
         </div>
       </div>
       <div class="login-card">
@@ -311,13 +310,12 @@ function renderPublic(keepMessage = false) {
     <section class="main" style="max-width:1180px;margin:0 auto">
       <div class="header">
         <div>
-          <p class="eyebrow">Catálogo demo</p>
+          <p class="eyebrow">Catálogo</p>
           <h2>Productos disponibles</h2>
         </div>
       </div>
       ${productGrid(false)}
     </section>
-    <div class="footer-note">Esta versión es independiente de MySQL. La versión con base de datos real se encuentra en Railway.</div>
   `;
 }
 
@@ -345,7 +343,7 @@ function menuItems(role) {
       { view: 'clientes', label: 'Clientes', icon: '👥' },
       { view: 'empleados', label: 'Empleados', icon: '🧑‍💼' },
       { view: 'ventas', label: 'Ventas', icon: '💳' },
-      { view: 'bd', label: 'Datos simulados', icon: '🗄️' }
+      { view: 'bd', label: 'Registros', icon: '🗄️' }
     ]);
   }
   if (role === 'empleado') {
@@ -387,7 +385,7 @@ function renderDashboard() {
   return `
     <section class="header">
       <div><p class="eyebrow">Panel ${state.user.role}</p><h1>Resumen general</h1></div>
-      <span class="badge">Datos locales</span>
+      <span class="badge">Sistema activo</span>
     </section>
     <section class="grid cols-4">
       <div class="card stat"><strong>${state.db.products.length}</strong><span>Productos</span></div>
@@ -396,8 +394,8 @@ function renderDashboard() {
       <div class="card stat"><strong>${money(totalSales)}</strong><span>Total vendido</span></div>
     </section>
     <section class="panel" style="margin-top:18px">
-      <h2>Modo estático</h2>
-      <p>Esta copia permite simular operaciones principales sin backend. Los registros se guardan en localStorage del navegador.</p>
+      <h2>Administración del sistema</h2>
+      <p>Desde este panel se pueden consultar y administrar productos, clientes, empleados, ventas e inventario.</p>
     </section>
   `;
 }
@@ -527,9 +525,9 @@ function renderRegisterSale() {
 
 function renderDBView() {
   return `
-    <section class="header"><div><p class="eyebrow">Simulación local</p><h1>Datos guardados</h1></div><button class="btn ghost" onclick="resetDB()">Reiniciar</button></section>
+    <section class="header"><div><p class="eyebrow">Información del sistema</p><h1>Registros</h1></div><button class="btn ghost" onclick="resetDB()">Reiniciar</button></section>
     <section class="panel">
-      <p>Este contenido representa la información guardada en localStorage. Sirve para mostrar el comportamiento de la versión estática.</p>
+      <p>En esta sección se muestra un resumen interno de la información registrada dentro del sistema, incluyendo usuarios, productos, clientes, empleados y ventas.</p>
       <pre style="white-space:pre-wrap;overflow:auto;background:#020617;border:1px solid var(--border);border-radius:18px;padding:14px;color:#e2e8f0;max-height:520px">${JSON.stringify(state.db, null, 2)}</pre>
     </section>
   `;
