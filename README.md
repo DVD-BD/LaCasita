@@ -713,3 +713,7 @@ A lo largo de las prácticas se trabajó desde la identificación de entidades y
 ## Enlace del proyecto desplegado
 
 La aplicación se encuentra disponible en: [https://lacasita-production-560a.up.railway.app](https://lacasita-production-560a.up.railway.app)
+
+
+**Versión estática en GitHub Pages:** 
+[La Casita estática](https://dvd-bd.github.io/LaCasita/)
